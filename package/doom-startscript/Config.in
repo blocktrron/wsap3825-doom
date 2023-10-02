@@ -1,0 +1,2 @@
+config BR2_PACKAGE_DOOM_STARTSCRIPT
+    bool "doomstartscript"
