@@ -1,0 +1,19 @@
+on: [push]
+
+jobs:
+  buildroot-image-job:
+    runs-on: ubuntu-latest
+    name: Build AP image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Image build
+        uses: ./.github/actions/buildroot-build
+        with:
+          defconfig: "wsap3825_doom_defconfig"
+          version: "2023.02.5"
+      - name: Archive build output
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: output/images/*

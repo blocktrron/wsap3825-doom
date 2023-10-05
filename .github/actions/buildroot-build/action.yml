@@ -1,0 +1,15 @@
+name: 'External Buildroot Build'
+description: 'Build an external Buildroot project'
+inputs:
+  defconfig:
+    description: 'Buildroot defconfig to use'
+    required: true
+  version:
+    description: 'Buildroot version to use'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.version }}
+    - ${{ inputs.defconfig }}
