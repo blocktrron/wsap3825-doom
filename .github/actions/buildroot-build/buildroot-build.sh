@@ -13,7 +13,7 @@ mv /tmp/buildroot-${BUILDROOT_VERSION} /tmp/buildroot
 # Build
 cd /tmp/buildroot
 make BR2_EXTERNAL="${GITHUB_WORKSPACE}" "${BUILDROOT_DEFCONFIG}"
-make -j$(nproc)
+make
 
 # Move output to GH-Workspace
 mv /tmp/buildroot/output "${GITHUB_WORKSPACE}"
