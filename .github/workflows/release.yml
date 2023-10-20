@@ -18,7 +18,7 @@ jobs:
           defconfig: "wsap3825_doom_defconfig"
           version: "2023.02.5"
       - name: Pack Release Artifact
-        run: tar cJf wsap3825-doom-output.tar.xz output
+        run: tar cJf wsap3825-doom-uimage.tar.xz -C output/images wsap3825-doom-uimage.bin
       - name: Create Release
         uses: actions/create-release@v1
         id: create_release
@@ -36,6 +36,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: wsap3825-doom-output.tar.xz
-          asset_name: wsap3825-doom-output.tar.xz
+          asset_path: wsap3825-doom-uimage.tar.xz
+          asset_name: wsap3825-doom-uimage.tar.xz
           asset_content_type: application/x-xz
