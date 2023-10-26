@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - '*'
+    tags:
+      - '*'
 
 jobs:
   buildroot-image-job:
@@ -22,3 +24,37 @@ jobs:
         with:
           name: build-output
           path: output/images/*
+
+  release-job:
+    needs: buildroot-image-job
+    runs-on: ubuntu-latest
+    name: Create Release
+    if: github.ref_type == 'tag'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: artifact-dl
+      - name: Pack Release Artifact
+        run: tar cJf wsap3825-doom-uimage.tar.xz -C artifact-dl wsap3825-doom-uimage.bin
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          body: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Upload Release Artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: wsap3825-doom-uimage.tar.xz
+          asset_name: wsap3825-doom-uimage.tar.xz
+          asset_content_type: application/x-xz
+
