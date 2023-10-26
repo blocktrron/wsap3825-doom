@@ -18,7 +18,7 @@ jobs:
         uses: ./.github/actions/buildroot-build
         with:
           defconfig: "wsap3825_doom_defconfig"
-          version: "2023.02.5"
+          version: "2023.02.6"
       - name: Archive build output
         uses: actions/upload-artifact@v3
         with:
